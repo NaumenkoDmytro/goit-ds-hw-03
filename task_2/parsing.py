@@ -54,7 +54,7 @@ with open("authors.json", "w", encoding="utf-8") as authors_file:
 
 def import_data_to_mongo():
     try:
-        client = MongoClient("mongodb+srv://dmytronaumenkods:K2Znw7KnmTA64Av@clustermain.zifz1la.mongodb.net/Parsing?retryWrites=true&w=majority&appName=ClusterMain")
+        client = MongoClient("mongodb+srv://PRIVATE:PRIVATE@clustermain.zifz1la.mongodb.net/PRIVATE?retryWrites=true&w=majority&appName=ClusterMain")
         db = client['Parsing']
         quotes_collection = db['Quotes']
         authors_collection = db['Authors']

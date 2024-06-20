@@ -1,6 +1,8 @@
+import os
 from pymongo import MongoClient, errors
 
-client = MongoClient("mongodb+srv://dmytronaumenkods:K2Znw7KnmTA64Av@clustermain.zifz1la.mongodb.net/Cats?retryWrites=true&w=majority&appName=ClusterMain")
+
+client = MongoClient("mongodb+srv://PRIVATE:PRIVATE.zifz1la.mongodb.net/PRIVATE?retryWrites=true&w=majority&appName=ClusterMain")
 
 db = client.Cats
 

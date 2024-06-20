@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 
 main_url = "https://quotes.toscrape.com/"
 
+
 def get_author_details(url):
     response = requests.get(url)
     soup = BeautifulSoup(response.text, "html.parser")
@@ -13,7 +14,12 @@ def get_author_details(url):
     born_locatione = soup.select("span.author-born-location")[0].text.strip()
     description = soup.select("div.author-description")[0].text.strip()
 
-    return {"fullname":full_name,"born_date":born_date,"born_locatione":born_locatione,"description":description}
+    return {
+        "fullname": full_name,
+        "born_date": born_date,
+        "born_locatione": born_locatione,
+        "description": description,
+    }
 
 
 quotes_data = []
@@ -29,8 +35,8 @@ while True:
     soup = BeautifulSoup(response.text, "html.parser")
     quotes = soup.select("div.quote")
     for quote in quotes:
-        text = quote.find("span", class_ ="text").text.strip()
-        author = quote.find("small", class_ ="author").text.strip()
+        text = quote.find("span", class_="text").text.strip()
+        author = quote.find("small", class_="author").text.strip()
         tags = [tag.text.strip() for tag in quote.find_all("a", class_="tag")]
 
         quotes_data.append({"tags": tags, "author": author, "quote": text})
@@ -51,13 +57,14 @@ with open("authors.json", "w", encoding="utf-8") as authors_file:
     json.dump(authors_data, authors_file, indent=4)
 
 
-
 def import_data_to_mongo():
     try:
-        client = MongoClient("mongodb+srv://PRIVATE:PRIVATE@clustermain.zifz1la.mongodb.net/PRIVATE?retryWrites=true&w=majority&appName=ClusterMain")
-        db = client['Parsing']
-        quotes_collection = db['Quotes']
-        authors_collection = db['Authors']
+        client = MongoClient(
+            "mongodb+srv://PRIVATE:PRIVATE@clustermain.zifz1la.mongodb.net/PRIVATE?retryWrites=true&w=majority&appName=ClusterMain"
+        )
+        db = client["Parsing"]
+        quotes_collection = db["Quotes"]
+        authors_collection = db["Authors"]
 
         with open("quotes.json", "r", encoding="utf-8") as quotes_file:
             quotes_data = json.load(quotes_file)
@@ -76,6 +83,7 @@ def import_data_to_mongo():
 
     except Exception as e:
         print(f"An error occurred: {e}")
+
 
 if __name__ == "__main__":
     # print(get_author_details("https://quotes.toscrape.com/author/Albert-Einstein/"))
